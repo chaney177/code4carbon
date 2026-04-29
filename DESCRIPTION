@@ -4,8 +4,7 @@ Version: 0.0.0.900
 Authors@R: 
     person("Hannah", "Chaney", , "hannah.chaney@deltacouncil.ca.gov", role = c("aut", "cre"))
 Description: Assorted functions that I may need to create products.
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: Apache License (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
