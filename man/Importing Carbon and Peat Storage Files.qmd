@@ -1,0 +1,78 @@
+---
+title: "Playing with Tiff"
+format: html
+Author: Hannah Chaney
+---
+## Importing the Tiff and Naming it
+### Getting the correct libraries
+```{r}
+library(boxr)
+library(terra)
+```
+
+ ``` {r}
+ box_auth()
+ ```
+
+
+#### Creating function to convert tiff to shp
+```{r}
+# Load required package
+if (!requireNamespace("terra", quietly = TRUE)) {
+  install.packages("terra")
+}
+
+# Function to convert GeoTIFF to Shapefile
+convert_tiff_to_shp <- function(tiff_path, shp_path) {
+  tryCatch({
+    # Validate input file
+    if (!file.exists(tiff_path)) {
+      stop("Error: The specified TIFF file does not exist.")
+    }
+    if (!grepl("\\.tif(f)?$", tiff_path, ignore.case = TRUE)) {
+      stop("Error: Input file must have a .tif or .tiff extension.")
+    }
+    
+    # Read the raster
+    cat("Reading TIFF file...\n")
+    r <- rast(tiff_path)
+    
+    # Check if raster has values
+    if (all(is.na(values(r)))) {
+      stop("Error: The raster contains only NA values.")
+    }
+    
+    # Convert raster to polygons
+    cat("Converting raster to polygons...\n")
+    # dissolve=TRUE merges adjacent cells with the same value
+    polygons <- as.polygons(r, dissolve = TRUE, na.rm = TRUE)
+    
+    # Save polygons as shapefile
+    cat("Saving shapefile...\n")
+    writeVector(polygons, shp_path, overwrite = TRUE)
+    
+    cat("Conversion successful! Shapefile saved at:", shp_path, "\n")
+    
+  }, error = function(e) {
+    cat("Conversion failed:", e$message, "\n")
+  })
+}
+
+# Example usage:
+# Replace with your file paths
+#tiff_file <- "input.tif"
+#shp_file  <- "output.shp"
+
+#convert_tiff_to_shp(tiff_file, shp_file)
+```
+
+### Opening the raw data folder in Box
+```{r}
+box_ls("379716945014")
+```
+
+### Importing the carbon_storage_hist, carbon_storage_mod, peat_thickness_hist, and peat_thickness_mod tiff files
+```{r}
+carbon_storage_his_tiff<- box_fetch("2279680173384") 
+```
+

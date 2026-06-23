@@ -3,7 +3,7 @@ Title: Dump for the functions I need
 Version: 0.0.0.900
 Authors@R: 
     person("Hannah", "Chaney", , "hannah.chaney@deltacouncil.ca.gov", role = c("aut", "cre"))
-Description: Assorted functions that I may need to create products.
+Description: This is an assorted functions that I may need to create products.
 License: Apache License (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
